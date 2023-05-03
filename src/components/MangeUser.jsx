@@ -46,6 +46,8 @@ const MangeUser = () => {
   };
 
   const userList = async () => {
+    console.log(previligesFilter, "prevfilter")
+    console.log(titlesFilter, "titlesFilter")
     try {
       const res = await TotalServices.manageUser(
         NumberOfRecordsPerPage,
@@ -203,19 +205,32 @@ const MangeUser = () => {
     }
   };
 
-  const handlePreviligeFilter = (selectedOption) => {
-    let previligeArr = [];
-    selectedOption.map((item) => {
-      previligeArr.push(item.label);
+  // const handleFilters = (selectedOption) => {
+  //   console.log(selectedOption, "selected")
+  //   let previligeArr = [];
+  //   selectedOption.map((item) => {
+  //     previligeArr.push(item.label);
+  //   });
+  //   setPreviligesFilter(previligeArr);
+  // };
+  // const handleTitleFilter = (selectedOption) => {
+  //   let titleArr = [];
+  //   selectedOption.map((item) => {
+  //     titleArr.push(item.label);
+  //   });
+  //   setTitlesFilter(titleArr);
+  // };
+
+  const handleFilters = (filterType, selectedOptions) => {
+    let filterArr = [];
+    selectedOptions.map((item) => {
+      filterArr.push(item.label);
     });
-    setPreviligesFilter(previligeArr);
-  };
-  const handleTitleFilter = (selectedOption) => {
-    let titleArr = [];
-    selectedOption.map((item) => {
-      titleArr.push(item.label);
-    });
-    setTitlesFilter(titleArr);
+    if (filterType === "previliges") {
+      setPreviligesFilter(filterArr);
+    } else if (filterType === "titles") {
+      setTitlesFilter(filterArr);
+    }
   };
   return (
     <>
@@ -289,14 +304,14 @@ const MangeUser = () => {
                 label="Previliges"
                 options={previligesList}
                 value={previligesFilter}
-                onChange={handlePreviligeFilter}
+                onChange={(selectedOption) => handleFilters("previliges", selectedOption)}
                 placeholder={"Select Previliges"}
               />
               <Filters
                 label="Titles"
                 options={titlesList}
                 value={titlesFilter}
-                onChange={handleTitleFilter}
+                onChange={(selectedOption) => handleFilters("titles", selectedOption)}
                 placeholder={"Select Titles"}
               />
             </div>
